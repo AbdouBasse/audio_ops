@@ -1,0 +1,23 @@
+name: Audio DevOps CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Build Docker image
+      run: docker build -t devops-audio .
+
+    - name: Run audio pipeline test
+      run: |
+        docker run --rm devops-audio data/raw_audio/sample.wav
+
+
